@@ -60,7 +60,7 @@
 <link href="<%=basePath%>index.css" rel="stylesheet">
 <script type="text/javascript">
 		var webInfo={
-				name:"一眼",
+				name:"JustWrapper",
 				basePath: "<%=basePath%>"
 		};
 		var userInfo = {
