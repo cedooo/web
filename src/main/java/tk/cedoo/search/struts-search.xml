@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="search" namespace="/search" extends="default">
+      	
+      	<interceptors>
+       		<interceptor name="limitCount" class="tk.cedoo.search.interceptor.SearchLimitInterceptor"/>
+       		<interceptor name="searchTimerTag" class="tk.cedoo.search.interceptor.SearchTimerTagInterceptor"/>
+       		
+			<!-- 搜索限制拦截器 -->
+            <interceptor-stack name="limitSearch">
+				<interceptor-ref name="timer"/>			
+                <interceptor-ref name="limitCount"/>
+				<interceptor-ref name="searchTimerTag"/>	
+         		<interceptor-ref name="paramsPrepareParamsStack"/>
+            </interceptor-stack>
+	  	</interceptors>
+    	<default-interceptor-ref name="limitSearch"/>
+      	
+		<!-- 得到JSON的 节点 数据  -->
+		<action name="jsonNode" class="tk.cedoo.search.graph.SearchGraphAction" method="json">
+            <result type="json">  
+				<param name="dataset">result</param>
+			</result>
+		</action>
+		
+		<!-- 根据节点ID得到记录内容-->
+		<action name="contentWithID" class="tk.cedoo.search.content.SearchContentAction" method="searchWithID">
+            <result>/content_browser.jsp</result>
+		</action>
+		
+		<!-- 得到JSON的 节点 树形结构数据  -->
+		<action name="childsNode" class="tk.cedoo.common.action.NodeTreeAction" method="searchChildsWithNodeID">
+            <result type="json">  
+				<param name="dataset">listChilds</param>
+			</result>
+		</action>
+    </package>
+</struts>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.common.action">
+	<resultMap type="tk.cedoo.vo.Node" id="nodemap">
+		<result column="nodeID" property="nodeID"/>
+		<result column="name" property="name"/>
+		<result column="type" property="type"/>
+		<result column="description" property="description"/>
+		<result column="color" property="color"/>
+		<result column="stroke" property="stroke"/>
+		<result column="strokewidth" property="strokewidth"/>
+		<result column="r" property="r"/>
+		<result column="font_size" property="font_size"/>
+		<result column="font_color" property="font_color"/>
+		<result column="img" property="img"/>
+		<result column="img_width" property="img_width"/>
+		<result column="img_height" property="img_height"/>
+	</resultMap>
+	<select id="selectChildsNodeWithID" parameterType="int" resultMap="nodemap">
+		SELECT t_node.N_NODE_ID AS nodeID, t_node.VC_NODE_NAME as name, t_node_type.VC_NODE_TYPE_CODE as type,
+			t_node.VC_NODE_DESCRIPTION as description,
+			t_node_style.VC_FILL_COLOR as color, t_node_style.VC_STROKE_COLOR as stroke,t_node_style.N_STROKE_WEIGHT as strokewidth,
+			t_node_style.N_R as r, t_node_style.N_FONT_SIZE as font_size, t_node_style.VC_FONT_COLOR as font_color,
+			t_node_style.DA_IMG as img, t_node_style.N_IMG_WIDTH as img_width, t_node_style.N_IMG_HEIGHT as img_height
+		FROM  t_link LEFT JOIN t_node ON t_link.N_E_NODE_ID = t_node.N_NODE_ID 
+			LEFT JOIN t_node_style ON t_node.N_NODE_STYLE_ID = t_node_style.N_NODE_STYLE_ID
+			LEFT JOIN t_node_type ON t_node.N_NODE_TYPE_ID = t_node_type.N_NODE_TYPE_ID
+		WHERE t_link.N_S_NODE_ID = #{nodeID}
+	</select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="manage" namespace="/manage" extends="default">
+    
+    	<interceptors>
+       		<interceptor name="authority" class="tk.cedoo.common.interceptor.ManagerAuthorityInterceptor"/>
+            <interceptor-stack name="manageAuth">
+                <interceptor-ref name="authority"/>
+         		<interceptor-ref name="paramsPrepareParamsStack"/>
+            </interceptor-stack>
+	  	</interceptors>
+    	<default-interceptor-ref name="manageAuth"/>
+    	 
+		<!-- 添加内容分类-->
+		<action name="default" class="tk.cedoo.manage.IndexManageAction">
+            <result>/manage/default.jsp</result>
+		</action>
+		<!-- 按ID查找节点ID-->
+		<action name="queryNodeWithID" class="tk.cedoo.manage.QueryNodeAction" method="json">
+            <result type="json">  
+				<param name="dataset">result</param>
+			</result>
+		</action>
+		
+		<!-- 添加内容分类-->
+		<action name="add" class="tk.cedoo.manage.AddNodeAction">
+            <result name="success" type="json">  
+				<param name="dataset">doResult</param>
+			</result>
+		</action>
+		
+		<!-- 按ID查找节点ID-->
+		<action name="modifyNode" class="tk.cedoo.manage.ModifyNodeAction">
+            <result type="json">  
+				<param name="dataset">doResult</param>
+			</result>
+		</action>
+		
+    </package>
+</struts>

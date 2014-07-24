@@ -1,0 +1,193 @@
+@CHARSET "UTF-8";
+body{
+	background:url(images/bg/stardust.png) repeat fixed top; 
+	/*
+	background: #00386b repeat fixed top;
+	background:url(images/bg/006.jpg) repeat fixed top; 
+	background:url(images/bg/denim.png) repeat fixed top; 
+	*/
+	padding:0px;
+	margin:0px;
+	overflow:-Scroll;
+	overflow-x:hidden;
+	font-size:80%;
+}
+textarea{
+	background: #e4cea1;
+}
+.leftNav {
+	float:left;
+	position:absolute;
+	left:1%;
+	min-width:12%;
+	max-width:17%;
+	min-height:5%;
+	max-height: 69.5%;
+	/* top:23%; */
+	bottom: 1%;
+	border:1px bolid #000000;
+	overflow:hidden;	
+	overflow-x:hidden;	
+}
+.leftNav .direc{
+	overflow:scroll;	
+	overflow-x:hidden;	
+}
+
+.leftNav > .k-block{
+	padding-bottom:0.1%;
+}
+.leftNav .k-info-colored{
+	/* text-align:center; */
+}
+/*登陆 */
+ .logonContainer{
+	top:10%;
+	width:20%;
+	float:right;
+	position:fixed;
+	left:100%;
+}
+
+.searchBar{
+	width: 22%;
+	float:left;
+	position:fixed;
+	margin-left:1%;
+	margin-top:1%;
+	background:transparent;
+}
+.searchBar #keyForSearch{
+	font-size:1.3em;
+}
+.searchBar > .k-textbox{
+	width:100%;
+}
+/*范围选择---样式1*/
+.searchBar > .mutSele {
+	width:100%;
+}
+.searchBar .mutSele > *,
+.searchBar .mutSele .k-multiselect-wrap.k-floatwrap,
+.searchBar .mutSele ul.k-reset li{
+}
+.searchBar .mutSele > *,
+.searchBar .mutSele .k-multiselect-wrap.k-floatwrap{	
+	/* background:transparent; */
+}
+/*搜索范围样式*/
+#conditionContain{
+	width:100%;
+	margin-top:-5px;
+	cursor:pointer;
+	text-align:center;
+}
+#conditionContain #conTag:hover{
+	/* background-color:#eeeeee; */
+}
+#conditionContain #conTag{
+	height:0.5em;
+	line-height:0.5em;
+}
+#conditionContain #conTag  > span{
+	margin-top:-4px;
+}
+#conditionContain .mutSele{
+	margin-top:10px;
+}
+#loginForm{
+	width:98%;
+	padding:1%;
+    float: left;
+}
+#loginForm .k-textbox{
+	width:100%;
+	margin-top:2%;
+	margin-bottom:1%;
+}
+
+#searchResultNum{
+	line-height:100% !important;
+}
+/*弹出框样式修改--禁止水平滚动条*/
+.k-window  div.k-window-content
+{
+      	overflow: hidden !important;
+      	overflow:-Scroll;overflow-x:hidden;
+}
+#navLink a.k-button:first-child{
+	float:left;
+}
+#resultNum{
+	float:left;
+	margin-left:0px;
+	margin-top:5px;
+}
+/*管理‘弹窗’*/
+#manageWindow{
+	top:0%;
+	float:right;
+	position:fixed;
+	left:99.9%;
+      	overflow: hidden !important;
+      	overflow:-Scroll;overflow-x:hidden;
+}
+#manageWindow .manaTag{
+	float:left;
+	position:fixed;
+	top:43%;
+	width:0.5%;
+	height:14%;
+	
+	margin-left:-0.5%;
+	cursor:pointer;
+}
+#manageWindow fieldset>*{
+	margin-bottom:2%;
+}
+#manageWindow .manaTag > span{
+	background-color:transparent;
+	width:100%;
+	text-align: center;
+}
+#manageWindow input.color-picker{
+	line-height: 1em;
+}
+#manageWindow div#styleInput > *{
+	margin-bottom: 1%;
+	width: 4%;
+}
+#manageWindow #keyWordsSelect{
+	float:left;
+}
+#clazzSelectWindow > div:first-child{
+	width:70%;
+}
+#clazzSelectWindow > div{
+	float:left;
+	margin-left:4%;
+	margin-bottom:1%;
+	text-align:bottom
+}
+#clazzSelectWindow > div > input[type='button']{
+	margin-bottom:10%;
+}
+/*目录节点*/
+#treeview .k-sprite {
+    background-image: url("kendoui-web/images/coloricons-sprite.png");
+}
+.clazztree img{
+	width:16px;
+	height:16px;
+}
+#treeSelect{
+}
+.rootfolder { background-position: 0 0; }
+.folder { background-position: 0 -16px; }
+.pdf { background-position: 0 -32px; }
+.html { background-position: 0 -48px; }
+.image { background-position: 0 -64px; }
+
+#nodeEditWindow{
+	display:none;
+}

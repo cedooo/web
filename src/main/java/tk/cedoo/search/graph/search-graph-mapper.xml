@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.search.graph">
+	<resultMap type="tk.cedoo.search.pojo.Link" id="linkmap">
+		<result column="source" property="source"/>
+		<result column="target" property="target"/>
+		<result column="color" property="color"/>
+		<result column="weight" property="weight"/>
+	</resultMap>
+	<select id="selectLinkWithStartNodeID" parameterType="tk.cedoo.search.graph.SearchGraphCondition" resultMap="linkmap">
+		SELECT t_link.N_S_NODE_ID as source, t_link.N_E_NODE_ID as target,
+			t_link_style.VC_LINK_COLOR as color, t_link_style.N_LINK_WEIGHT as weight
+		FROM t_link  LEFT JOIN t_link_style ON t_link.N_LINK_STYLE_ID = t_link_style.N_LINK_STYLE_ID
+		WHERE t_link.N_S_NODE_ID = #{startNodeID}
+			AND	t_link.DT_DEL_LINK_TIME IS NULL 
+	</select>
+	<select id="selectLinkWithCondition" parameterType="tk.cedoo.search.graph.SearchGraphCondition" resultMap="linkmap">
+		SELECT t_link.N_S_NODE_ID as source, t_link.N_E_NODE_ID as target,
+			t_link_style.VC_LINK_COLOR as color, t_link_style.N_LINK_WEIGHT as weight
+		FROM t_link  LEFT JOIN t_link_style ON t_link.N_LINK_STYLE_ID = t_link_style.N_LINK_STYLE_ID
+			LEFT JOIN t_node ON t_link.N_E_NODE_ID = t_node.N_NODE_ID
+			LEFT JOIN t_record_content ON t_node.N_RECORD_OR_CT_ID = t_record_content.N_RECORD_ID
+		<where>
+			t_link.DT_DEL_LINK_TIME IS NULL  
+			<if test="searchScope != null and searchScope.nodeName != 'Y'.toString() and searchScope.nodeName != 'y'.toString()">
+				AND t_node.N_RECORD_OR_CT_ID IS NOT NULL
+			</if>
+			AND
+			(
+				FALSE 
+				<if test="searchScope != null and ('Y'.toString() == searchScope.nodeName or 'y'.toString() == searchScope.nodeName )">
+				 	OR t_node.VC_NODE_NAME LIKE concat('%',#{key},'%')		
+				</if>
+				<if test="searchScope != null and ('Y'.toString() == searchScope.title or 'y'.toString() == searchScope.title )">
+				 	OR t_record_content.VC_ARTICLE_TITLE LIKE concat('%',#{key},'%')	
+				 	OR t_record_content.VC_ARTICLE_SUBHEAD	LIKE concat('%',#{key},'%')
+				</if>
+				<if test="searchScope != null and ('Y'.toString() == searchScope.content or 'y'.toString() == searchScope.content )">
+				 	OR t_record_content.VC_RECORD_CONTENT LIKE concat('%',#{key},'%')		
+				</if>
+				<!--
+				<if test="searchScope != null and ('Y'.toString() == searchScope.tag or 'y'.toString() == searchScope.tag )">
+				 	OR t_node.VC_NODE_NAME LIKE concat('%',#{key},'%')		
+				</if>
+				-->
+			)
+		</where>
+	</select>
+	<!-- 
+	<select id="selectLinkWithPagging" parameterType="tk.cedoo.search.graph.SearchGraphCondition" resultMap="linkmap">
+		SELECT t_link.N_S_NODE_ID as source, t_link.N_E_NODE_ID as target,
+			t_link_style.VC_LINK_COLOR as color, t_link_style.N_LINK_WEIGHT as weight
+		FROM t_link  LEFT JOIN t_link_style ON t_link.N_LINK_STYLE_ID = t_link_style.N_LINK_STYLE_ID
+			LEFT JOIN t_node ON t_link.N_E_NODE_ID = t_node.N_NODE_ID
+		<where>
+			t_link.DT_DEL_LINK_TIME IS NULL 
+			AND(
+			<if test="startNodeID != '-1'">
+				t_link.N_S_NODE_ID = #{startNodeID}
+			</if>
+			<if test="startNodeID == '-1' and 'Y' == searchScope.nodeName">
+			 	t_node.VC_NODE_NAME LIKE concat('%',#{key},'%')		
+			</if>
+			)
+		</where>
+	</select> -->
+	<select id="selectNodeIDWithPagging" parameterType="tk.cedoo.search.graph.SearchGraphCondition" resultType="int">
+		SELECT t_link.N_E_NODE_ID
+		FROM t_link 
+		WHERE t_link.N_S_NODE_ID = #{startNodeID}
+			<!-- AND t_link.DT_DEL_LINK_TIME IS NULL
+			LIMIT (#{page}-1)*#{numPerPage}, #{numPerPage} -->
+			<!-- 添加排序方式 -->
+	</select>
+	
+	
+	<resultMap type="tk.cedoo.vo.Node" id="nodemap">
+		<result column="nodeID" property="nodeID"/>
+		<result column="name" property="name"/>
+		<result column="type" property="type"/>
+		<result column="description" property="description"/>
+		<result column="color" property="color"/>
+		<result column="stroke" property="stroke"/>
+		<result column="strokewidth" property="strokewidth"/>
+		<result column="r" property="r"/>
+		<result column="font_size" property="font_size"/>
+		<result column="font_color" property="font_color"/>
+		<result column="img" property="img"/>
+		<result column="img_width" property="img_width"/>
+		<result column="img_height" property="img_height"/>
+	</resultMap>
+	<select id="selectNodeWithID" parameterType="int" resultMap="nodemap">
+		SELECT t_node.N_NODE_ID AS nodeID, t_node.VC_NODE_NAME as name, t_node_type.VC_NODE_TYPE_CODE as type,
+			t_node.VC_NODE_DESCRIPTION as description,
+			t_node_style.VC_FILL_COLOR as color, t_node_style.VC_STROKE_COLOR as stroke,t_node_style.N_STROKE_WEIGHT as strokewidth,
+			t_node_style.N_R as r, t_node_style.N_FONT_SIZE as font_size, t_node_style.VC_FONT_COLOR as font_color,
+			t_node_style.DA_IMG as img, t_node_style.N_IMG_WIDTH as img_width, t_node_style.N_IMG_HEIGHT as img_height
+		FROM  t_node LEFT JOIN t_node_style ON t_node.N_NODE_STYLE_ID = t_node_style.N_NODE_STYLE_ID
+			LEFT JOIN t_node_type ON t_node.N_NODE_TYPE_ID = t_node_type.N_NODE_TYPE_ID
+		WHERE t_node.N_NODE_ID = #{nodeID}
+	</select>
+</mapper>

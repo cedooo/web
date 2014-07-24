@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.manage.keyword">
+	<!-- 插入借点样式 -->
+	<insert id="insertNodeStyle" parameterType="tk.cedoo.po.NodeStyle" useGeneratedKeys="true" keyProperty="nodeStyleID">
+		INSERT INTO t_node_style
+		   ( VC_NODE_STYLE_NAME, VC_STROKE_COLOR, N_STROKE_WEIGHT, VC_FILL_COLOR, DA_IMG, N_IMG_HEIGHT, 
+		   		N_IMG_WIDTH, N_FONT_SIZE, N_R, VC_FONT_COLOR, DT_NODE_STYLE_ADD_TIME)
+		VALUES
+   			(#{nodeStyleName}, #{strokeColor}, #{strokeWeight}, #{fillColor}, #{img}, #{imgHeight},
+   			 #{imgWidth}, #{fontSize}, #{r}, #{fontColor},  now() )
+	</insert>
+	<!-- 插入类型节点 -->
+	<insert id="insertClazzNode" parameterType="tk.cedoo.po.Node"  useGeneratedKeys="true" keyProperty="nodeID">
+		INSERT INTO t_node
+   			(N_NODE_TYPE_ID, N_NODE_STYLE_ID, VC_NODE_NAME, VC_NODE_DESCRIPTION, DT_NODE_ADD_TIME)
+		VALUES(#{nodeTypeID}, #{nodeStyleID}, #{nodeName}, #{nodeDescription},  now())
+	</insert>
+	<insert id="insertLinkStyle" parameterType="tk.cedoo.po.LinkStyle"  useGeneratedKeys="true" keyProperty="linkStyleID">
+		INSERT INTO t_link_style
+		   ( VC_LINK_COLOR, N_LINK_WEIGHT, DT_LS_ADD_TIME)
+		VALUES (#{linkColor}, #{linkWeight}, now())
+	</insert>
+	<insert id="insertLink" parameterType="tk.cedoo.po.Link">
+		INSERT INTO t_link (N_S_NODE_ID, N_E_NODE_ID, N_LINK_STYLE_ID, N_LINK_TYPE_ID, N_DEPT, DT_ADD_LINK_TIME)
+		VALUES (#{sNodeID}, #{eNodeID}, #{linkStyleID}, #{linkTypeID}, #{dept}, now())
+	</insert>
+</mapper>

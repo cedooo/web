@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.manage">
+	<insert id="insertNodeStyle" parameterType="tk.cedoo.po.NodeStyle" useGeneratedKeys="true" keyProperty="nodeStyleID">
+		INSERT INTO t_node_style
+		   ( VC_NODE_STYLE_NAME, VC_STROKE_COLOR, N_STROKE_WEIGHT, VC_FILL_COLOR, DA_IMG, N_IMG_HEIGHT, 
+		   		N_IMG_WIDTH, N_FONT_SIZE, N_R, VC_FONT_COLOR, DT_NODE_STYLE_ADD_TIME)
+		VALUES
+   			(#{nodeStyleName}, #{strokeColor}, #{strokeWeight}, #{fillColor}, #{img}, #{imgHeight},
+   			 #{imgWidth}, #{fontSize}, #{r}, #{fontColor},  now() )
+	</insert>
+	<insert id="insertClazzNode" parameterType="tk.cedoo.po.Node"  useGeneratedKeys="true" keyProperty="nodeID">
+		INSERT INTO t_node
+   			(N_NODE_TYPE_ID, N_NODE_STYLE_ID, VC_NODE_NAME, VC_NODE_DESCRIPTION, DT_NODE_ADD_TIME)
+		VALUES(#{nodeTypeID}, #{nodeStyleID}, #{nodeName}, #{nodeDescription},  now())
+	</insert>
+	<insert id="insertLinkStyle" parameterType="tk.cedoo.po.LinkStyle"  useGeneratedKeys="true" keyProperty="linkStyleID">
+		INSERT INTO t_link_style
+		   ( VC_LINK_COLOR, N_LINK_WEIGHT, DT_LS_ADD_TIME)
+		VALUES (#{linkColor}, #{linkWeight}, now())
+	</insert>
+	<insert id="insertLink" parameterType="tk.cedoo.po.Link">
+		INSERT INTO t_link (N_S_NODE_ID, N_E_NODE_ID, N_LINK_STYLE_ID, N_LINK_TYPE_ID, N_DEPT, DT_ADD_LINK_TIME)
+		VALUES (#{sNodeID}, #{eNodeID}, #{linkStyleID}, #{linkTypeID}, #{dept}, now())
+	</insert>
+	
+	
+	<resultMap type="tk.cedoo.vo.Node" id="nodemap">
+		<result column="nodeID" property="nodeID"/>
+		<result column="name" property="name"/>
+		<result column="type" property="type"/>
+		<result column="description" property="description"/>
+		<result column="color" property="color"/>
+		<result column="stroke" property="stroke"/>
+		<result column="strokewidth" property="strokewidth"/>
+		<result column="r" property="r"/>
+		<result column="font_size" property="font_size"/>
+		<result column="font_color" property="font_color"/>
+		<result column="img" property="img"/>
+		<result column="img_width" property="img_width"/>
+		<result column="img_height" property="img_height"/>
+	</resultMap>
+	<select id="selectNodeWithID" parameterType="int" resultMap="nodemap">
+		SELECT t_node.N_NODE_ID AS nodeID, t_node.VC_NODE_NAME as name, t_node_type.VC_NODE_TYPE_CODE as type,
+			t_node.VC_NODE_DESCRIPTION as description,
+			t_node_style.VC_FILL_COLOR as color, t_node_style.VC_STROKE_COLOR as stroke,t_node_style.N_STROKE_WEIGHT as strokewidth,
+			t_node_style.N_R as r, t_node_style.N_FONT_SIZE as font_size, t_node_style.VC_FONT_COLOR as font_color,
+			t_node_style.DA_IMG as img, t_node_style.N_IMG_WIDTH as img_width, t_node_style.N_IMG_HEIGHT as img_height
+		FROM  t_node LEFT JOIN t_node_style ON t_node.N_NODE_STYLE_ID = t_node_style.N_NODE_STYLE_ID
+			LEFT JOIN t_node_type ON t_node.N_NODE_TYPE_ID = t_node_type.N_NODE_TYPE_ID
+		WHERE t_node.N_NODE_ID = #{nodeID}
+	</select>
+	
+	<update id="updateNode"  parameterType="tk.cedoo.po.Node">
+		UPDATE t_node
+		SET t_node.VC_NODE_NAME = #{nodeName},
+			t_node.VC_NODE_DESCRIPTION = #{nodeDescription}
+		WHERE t_node.N_NODE_ID = #{nodeID}
+	</update>
+	<update id="updateNodeStyle"  parameterType="tk.cedoo.po.NodeStyle">
+		UPDATE t_node_style
+		SET	t_node_style.VC_NODE_STYLE_NAME = #{nodeStyleID},
+			t_node_style.N_STROKE_WEIGHT = #{strokeWeight},
+			t_node_style.VC_STROKE_COLOR = #{strokeColor},
+			t_node_style.VC_FILL_COLOR = #{fillColor},
+			t_node_style.DA_IMG = #{img},
+			t_node_style.N_IMG_HEIGHT = #{imgHeight},
+			t_node_style.N_IMG_WIDTH = #{imgWidth},
+			t_node_style.N_FONT_SIZE = #{fontSize},
+			t_node_style.N_R = #{r},
+			t_node_style.VC_FONT_COLOR = #{fontColor}
+		WHERE t_node_style.N_NODE_STYLE_ID = #{nodeStyleID}
+	</update>
+	<update id="updateLinkSNode"  parameterType="tk.cedoo.po.Link">
+		UPDATE t_link
+		SET t_link.N_S_NODE_ID = #{sNodeID}
+		WHERE t_link.N_E_NODE_ID = #{linkID}
+	</update>
+</mapper>

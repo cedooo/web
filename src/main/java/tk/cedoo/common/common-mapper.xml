@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.common">
+	<select id="selectRootNodeID"  resultType="int">
+		SELECT t_node.N_NODE_ID
+		FROM t_node LEFT JOIN t_node_type ON t_node.N_NODE_TYPE_ID = t_node_type.N_NODE_TYPE_ID
+		WHERE t_node.DT_NODE_DEL_TIME IS NULL 
+			AND t_node_type.VC_NODE_TYPE_CODE = 'root' 
+			AND t_node_type.DT_DEL_NT_TIME IS NULL
+	</select>
+	
+	<select id="selectClazzNodeTypeID"  resultType="int">
+		SELECT
+			t_node_type.N_NODE_TYPE_ID
+		FROM
+			t_node_type
+		WHERE t_node_type.VC_NODE_TYPE_CODE = 'clazz' AND t_node_type.DT_DEL_NT_TIME IS NULL
+	</select>
+	<select id="selectLeafNodeTypeID"  resultType="int">
+		SELECT
+			t_node_type.N_NODE_TYPE_ID
+		FROM
+			t_node_type
+		WHERE t_node_type.VC_NODE_TYPE_CODE = 'leaf' AND t_node_type.DT_DEL_NT_TIME IS NULL
+	</select>
+	<select id="selectParentAndChildTypeID"  resultType="int">
+		SELECT
+			t_link_type.N_LINK_TYPE_ID
+		FROM
+			t_link_type 
+		WHERE 
+			t_link_type.VC_LINK_CODE = 'parentAndChild' AND t_link_type.DT_DEL_LT_TIME IS NULL
+	</select>
+		
+	<select id="selectNodeStyleIDByNodeID"  resultType="int">
+		SELECT
+			t_node.N_NODE_STYLE_ID
+		FROM
+			t_node
+		WHERE t_node.N_NODE_ID = #{id}
+	</select>
+	
+	<select id="selectLinkIDByNodeID"  resultType="int">
+		SELECT
+			t_link.N_LINK_ID
+		FROM
+			t_link
+		WHERE
+			t_link.N_E_NODE_ID = #{id}
+	</select>
+	
+</mapper>

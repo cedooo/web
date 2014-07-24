@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+body{
+	/*background:url(images/bg/006.jpg) repeat fixed top; */
+	background:teal repeat fixed top;
+	padding:0px;
+	margin:0px;
+	overflow:-Scroll;
+	overflow-x:hidden;
+	font-size:80%;
+}

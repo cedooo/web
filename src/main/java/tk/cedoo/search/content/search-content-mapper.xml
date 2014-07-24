@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.cedoo.search.content">
+	<resultMap type="tk.cedoo.search.pojo.RecordContent" id="recordContentMap">
+		<result column="nodeID" property="nodeID"/>
+		<result column="recordID" property="recordID"/>
+		<result column="title" property="title"/>
+		<result column="subhead" property="subhead"/>
+		<result column="preview" property="preview"/>
+		<result column="content" property="content"/>
+		<result column="intro" property="intro"/>
+		<result column="downloadUrl" property="downloadUrl"/>
+		<result column="linkUrl" property="linkUrl"/>
+		<result column="addTime" property="addTime"/>
+	</resultMap>
+	<select id="selectRecordContentWithID" parameterType="tk.cedoo.search.content.SearchContentCondition" resultMap="recordContentMap">
+		SELECT t_node.N_NODE_ID AS nodeID,
+			t_node.N_RECORD_OR_CT_ID AS recordID,
+			t_record_content.VC_RECORD_CONTENT AS content,
+			t_record_content.VC_DOWNLOAD_URL AS downloadUrl,
+			t_record_content.VC_LINK_URL AS linkUrl,
+			t_record_content.VC_INTRO AS intro,
+			t_record_content.VC_PREVIEW AS preview,
+			t_record_content.VC_ARTICLE_TITLE AS title,
+			t_record_content.DT_RECORD_ADD_TIME AS addTime,
+			t_record_content.VC_ARTICLE_SUBHEAD AS subhead
+		FROM t_node LEFT JOIN t_record_content ON t_node.N_RECORD_OR_CT_ID = t_record_content.N_RECORD_ID
+		WHERE t_node.N_NODE_ID = #{nodeID} AND t_node.N_RECORD_OR_CT_ID IS NOT NULL  
+			AND t_record_content.DT_RECORD_DEL_TIME IS NULL
+	</select>
+</mapper>

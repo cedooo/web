@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="tk/cedoo/db/db-config.properties"></properties>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+			      <property name="driver" value="${db_mysql_driver}"/>
+			      <property name="url" value="${db_mysql_url}"/>
+			      <property name="username" value="${db_mysql_username}"/>
+			      <property name="password" value="${db_mysql_password}"/>
+			</dataSource>
+		</environment>
+		<environment id="blog">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+			      <property name="driver" value="${driver}"/>
+			      <property name="url" value="${url}"/>
+			      <property name="username" value="${user}"/>
+			      <property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="tk/cedoo/common/common-mapper.xml"/>
+		<mapper resource="tk/cedoo/search/graph/search-graph-mapper.xml"/>
+		<mapper resource="tk/cedoo/search/content/search-content-mapper.xml"/>
+		<mapper resource="tk/cedoo/common/action/common-mapper.xml"/>
+		
+		<mapper resource="tk/cedoo/manage/manage-mapper.xml"/>
+		<mapper resource="tk/cedoo/manage/clazz/manage-clazz-mapper.xml"/>
+		<mapper resource="tk/cedoo/manage/content/manage-content-mapper.xml"/>
+		<mapper resource="tk/cedoo/manage/keyword/manage-keyword-mapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+.nodeImg:hover{
+	cursor: pointer;
+}
+.nodeContainer:hover{
+	cursor: move;
+}
+.nodeText:hover{
+	/*
+	cursor: text;
+	*/
+}
