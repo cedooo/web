@@ -4,7 +4,7 @@
 	<groupId>me.clazz</groupId>
 	<artifactId>blog</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>blog Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
@@ -15,24 +15,29 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>javaee</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>5</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis</artifactId>
-		    <version>3.2.7</version>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jstl-impl</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>javaee</groupId>
-		    <artifactId>javaee-api</artifactId>
-		    <version>5</version>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.7</version>
 		</dependency>
 		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -40,24 +45,14 @@
 			<version>2.3.16.3</version>
 		</dependency>
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.31</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.struts</groupId>
-		    <artifactId>struts2-json-plugin</artifactId>
-		    <version>2.3.16.3</version>
-		</dependency>
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.evernote</groupId>
-		    <artifactId>evernote-api</artifactId>
-		    <version>1.25.1</version>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>2.3.16.3</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -66,8 +61,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>
