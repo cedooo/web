@@ -2,7 +2,7 @@ web
 ===
 
 my website
-»·¾³: 
+ç¯å¢ƒ: 
 	jre 7
 	myeclipse
 	maven
