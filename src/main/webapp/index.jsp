@@ -57,7 +57,7 @@
 <script type="text/javascript"
 	src="<%=basePath%>js/index/searchModule.js"></script>
 
-<link href="<%=basePath%>index.css" rel="stylesheet">
+<link href="<%=basePath%>css/index.css" rel="stylesheet">
 <script type="text/javascript">
 		var webInfo={
 				name:"JustWrapper",
@@ -71,7 +71,7 @@
 	var g_parent_info = {}; /* 例子 ："dept":-1,"key":"","nodeType":"","numPerPage":20,"page":1,"startNodeID":1*/
 </script>
 
-<script type="text/javascript" src="<%=basePath%>index.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/index.js"></script>
 <title></title>
 </head>
 <body>
