@@ -32,6 +32,10 @@ public class DBManager {
 		}
 		log.info("DBManager初始化 完成！");
 	}
+	/**
+	 * 得到SqlSessionFactory
+	 * @return
+	 */
 	public static SqlSessionFactory getSqlSessionFactory() {
 		return sqlSessionFactory;
 	}
