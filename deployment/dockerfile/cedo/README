@@ -1,0 +1,2 @@
+web APP directory£º /cedo/tomcat7/webapps
+example: docker run -v /src/war:/cedo/tomcat7/webapps

@@ -1,0 +1,12 @@
+<h4>step</h4> 
+<ol>
+<li>
+	CREATE DATABASE blog;
+</li>
+<li>
+	use blog;
+</li>
+<li>
+	\. blog.sql
+</li>
+</ol>
